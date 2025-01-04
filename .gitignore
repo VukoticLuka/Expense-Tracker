@@ -1,0 +1,28 @@
+# Node.js dependecies
+node_modules/
+
+# Environment variables file
+.env
+
+# Log files
+*.log
+
+# VSCode settings
+.vscode/
+
+# Build directory
+build/
+
+# Temporary files
+tmp/
+
+# Cache directories
+.npm/
+.cache/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NPM package-lock file
+package-lock.json
