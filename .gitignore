@@ -21,4 +21,7 @@ Thumbs.db
 # Backend specifično
 backend/node_modules/
 backend/.env
+backend/package-lock.json
+backend/*.log
+backend/*.logs
 backend/dist/
