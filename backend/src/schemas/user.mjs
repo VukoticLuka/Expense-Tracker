@@ -8,7 +8,7 @@ function lengthValidator(min, max){
     }
 }
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
@@ -46,10 +46,7 @@ const userSchema = new mongoose.Schema({
     balance: {
         type: Number,
         default: 0,
-        validate: {
-            validator: (value) => value >= 0,
-            message: (props) => `${props.value} must be higher or equal 0. Cannot be negative`
-        }
+        min: [0, 'Balance cannot be negative']
     },
     createdAt: {
         type: Date,
