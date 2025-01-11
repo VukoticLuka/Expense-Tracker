@@ -33,10 +33,11 @@ export const updateUserByUsername = async function(username, updateBody){
 
 export const deleteUserByUsername = async function(username){
     try{
-        const {deletedCount} = await userModel.deleteOne({"username": username});
-        if(deletedCount === 1) return {msg: `Successful deletion of User ${username}`}
-        return {msg: `Unsuccessful deletion of User ${username}`};
+        const result = await userModel.deleteOne({"username": username});
+
+        return result;
     }catch(error){
         console.error(`Error occured in deleteUserByUsername func: ${error.message}`);
+        throw new Error("Internal server error in deleteUserByUsername function");
     }
 }
