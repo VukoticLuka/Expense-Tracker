@@ -12,7 +12,9 @@ const prefix = process.env.PREFIX || "/api";
 const app = express();
 
 app.use(express.json());
-app.use(prefix, router);
+
+app.use(`${prefix}/users`, router);
+
 
 (async function(){
     await dbConnection();
@@ -20,3 +22,7 @@ app.use(prefix, router);
         console.log(`Server is running on port ${port}`);
     })
 })()
+
+app.get("/", (req,res) => {
+    return res.status(200).send({msg: "Check health done!"});
+})

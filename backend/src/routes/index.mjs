@@ -5,7 +5,7 @@ import userRouter from "./users.mjs"
 const router = Router();
 
 
-router.use("/users", userRouter);
+router.use(userRouter);
 
 
 export default router;
