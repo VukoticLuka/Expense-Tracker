@@ -41,7 +41,7 @@ export const updateUserByUsername = async function(username, updateBody){
             }
         }
 
-        await user.save()
+        await user.save({validateBeforeSave: true});
 
         return user.toJSON();
     }catch(error){

@@ -2,7 +2,8 @@ import { Router } from "express";
 
 import {createUser,
         fetchUserByUsername,
-        deleteUserByUsername}
+        deleteUserByUsername,
+        updateUserByUsername}
         from "../services/userService.mjs"
 
 const router = Router();
@@ -36,7 +37,27 @@ router.post("/", async (req,res) => {
 });
 
 router.put("/:username", async (req, res) => {
-    //TODO
+    try{
+        const {
+            body,
+            params:{
+                username
+            }
+        } = req;
+
+        const updatedUser = await updateUserByUsername(username, body);
+
+        return res.status(200).json(updatedUser);
+
+
+    }catch(error){
+        if(error.message.startsWith("Status 404")){
+            return res.status(404).send({"error": error.message});
+        }
+        else{
+            return res.status(500).send({"error": "Internal server error"});
+        }
+    }
 });
 
 router.delete("/:username", async (req, res) => {
