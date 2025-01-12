@@ -28,7 +28,26 @@ export const fetchUserByUsername = async function(username){
 }
 
 export const updateUserByUsername = async function(username, updateBody){
-    //TODO
+    try{
+        const user = await fetchUserByUsername(username);
+
+        if(!user){
+            throw new Error(`Status 404. User ${username} not found`);
+        }
+
+        for(const key in updateBody){
+            if(updateBody.hasOwnProperty(key) && key in user){
+                user[key] = updateBody[key];
+            }
+        }
+
+        await user.save()
+
+        return user.toJSON();
+    }catch(error){
+        console.error(`Error in updateUserByUsername: ${error.message}`);
+        throw error;
+    }
 }
 
 export const deleteUserByUsername = async function(username){
