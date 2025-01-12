@@ -8,6 +8,14 @@ import {createUser,
 
 const router = Router();
 
+const preventUsernameInBody = (req, res, next) => {
+    if(req.body.username){
+        return res.status(400).json({error: "Username cannot be in update body"});
+    }
+
+    next();
+}
+
 router.get("/:username", async (req, res) => {
     try{
         const username = req.params.username;
@@ -36,7 +44,9 @@ router.post("/", async (req,res) => {
     }
 });
 
-router.put("/:username", async (req, res) => {
+router.put("/:username", 
+    preventUsernameInBody,
+    async (req, res) => {
     try{
         const {
             body,
