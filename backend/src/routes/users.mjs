@@ -38,7 +38,7 @@ router.post("/",
 
         res.status(201).json(newUser);
     }catch(error){
-        if(error.message.startsWith("Validation error: ")){
+        if(error.message.startsWith("Validation error: ") || error.message.startsWith("Username or email")){
             return res.status(400).json({"error": error.message});
         }
         else if(error.message.startsWith("Error hashing")){
