@@ -19,8 +19,8 @@ export const createUser = async function(newUser){
 
 export const fetchUserByUsername = async function(username){
     try{
-        const user = await userModel.findOne({"username": username},{password: 0, createdAt: 0});
-        return user;
+        const user = await userModel.findOne({"username": username});
+        return user.toJSON();
     }catch(error){
         console.error(`Error occured in fetchUserByUsername func: ${error.message}`);
         throw error;
