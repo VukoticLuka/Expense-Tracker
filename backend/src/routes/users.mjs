@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
@@ -33,12 +33,16 @@ router.get("/:username", async (req, res) => {
 router.post("/", async (req,res) => {
     try{
         const {body} = req;
+        body.password = await hashPassword(body.password);
         const newUser = await createUser(body);
 
         res.status(201).json(newUser);
     }catch(error){
         if(error.message.startsWith("Validation error: ")){
             return res.status(400).json({"error": error.message});
+        }
+        else if(error.message.startsWith("Error hashing")){
+            return res.status(500).json({"error": "Internal server error while hashing password"});
         }
         return res.status(500).json({"error": "Internal server error"});
     }
