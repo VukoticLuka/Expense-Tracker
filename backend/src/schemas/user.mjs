@@ -54,6 +54,20 @@ export const userSchema = new mongoose.Schema({
         default: () => Date.now()
     },
 
+}, {
+    toJSON: {
+        transform: function(doc,ret){
+            delete ret.password;
+            delete ret.__v;
+            delete ret._id;
+        }
+    },
+    toObject: {
+        transform: function(doc,ret){
+            delete ret.__v;
+            delete ret.password;
+        }
+    }
 });
 
 
