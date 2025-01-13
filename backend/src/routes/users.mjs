@@ -1,5 +1,8 @@
 import { Router } from "express";
+import {checkSchema} from 'express-validator'
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
+import { createUserValidationShema } from "../utils/validationSchemas.mjs";
+import { processUserValidationSchema } from '../utils/middlewares.mjs'
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
@@ -30,7 +33,10 @@ router.get("/:username", async (req, res) => {
     }   
 });
 
-router.post("/", async (req,res) => {
+router.post("/", 
+    checkSchema(createUserValidationShema),
+    processUserValidationSchema,
+    async (req,res) => {
     try{
         const {body} = req;
         body.password = await hashPassword(body.password);
