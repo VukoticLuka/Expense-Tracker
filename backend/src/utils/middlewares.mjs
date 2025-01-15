@@ -1,5 +1,13 @@
 import {validationResult} from 'express-validator'
 
+export const preventUsernameInBody = (req, res, next) => {
+    if(req.body.username){
+        return res.status(400).json({error: "Username cannot be in update body"});
+    }
+
+    next();
+}
+
 export const processUserValidationSchema = async (req,res, next) => {
     const result = validationResult(req);
 

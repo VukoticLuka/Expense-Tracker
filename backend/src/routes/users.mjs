@@ -2,7 +2,9 @@ import { Router } from "express";
 import {checkSchema} from 'express-validator'
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import { createUserValidationShema } from "../utils/validationSchemas.mjs";
-import { processUserValidationSchema } from '../utils/middlewares.mjs'
+import { processUserValidationSchema,
+        preventUsernameInBody
+ } from '../utils/middlewares.mjs'
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
@@ -11,17 +13,9 @@ import {createUser,
 
 const router = Router();
 
-const preventUsernameInBody = (req, res, next) => {
-    if(req.body.username){
-        return res.status(400).json({error: "Username cannot be in update body"});
-    }
-
-    next();
-}
-
-router.get("/:username", async (req, res) => {
+router.get("/", async (req, res) => {
     try{
-        const username = req.params.username;
+        const {username} = req.query;
 
         const user = await fetchUserByUsername(username);
 
@@ -44,7 +38,7 @@ router.post("/",
 
         res.status(201).json(newUser);
     }catch(error){
-        if(error.message.startsWith("Validation error: ")){
+        if(error.message.startsWith("Validation error: ") || error.message.startsWith("Username or email")){
             return res.status(400).json({"error": error.message});
         }
         else if(error.message.startsWith("Error hashing")){
@@ -54,17 +48,16 @@ router.post("/",
     }
 });
 
-router.put("/:username", 
+router.put("/", 
     preventUsernameInBody,
     async (req, res) => {
     try{
         const {
             body,
-            params:{
+            query: {
                 username
             }
         } = req;
-
         const updatedUser = await updateUserByUsername(username, body);
 
         return res.status(200).json(updatedUser);

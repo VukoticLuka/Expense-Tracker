@@ -6,6 +6,11 @@ export const createUser = async function(newUser){
         return user.toJSON();
     }catch(error){
         console.error(`Error occured in createUser func: ${error.message}`);
+
+        if(error.code === 11000){
+            throw new Error('Username or email already exists!');
+        }
+
         if(error.name === "ValidationError"){
             console.error("Validation failed: " + error.errors);
             throw new Error("Validation error: " + Object.values(error.errors).map((err) => err.message).join(", "));
@@ -19,8 +24,8 @@ export const createUser = async function(newUser){
 
 export const fetchUserByUsername = async function(username){
     try{
-        const user = await userModel.findOne({"username": username},{password: 0, createdAt: 0});
-        return user;
+        const user = await userModel.findOne({"username": username});
+        return user.toJSON();
     }catch(error){
         console.error(`Error occured in fetchUserByUsername func: ${error.message}`);
         throw error;
