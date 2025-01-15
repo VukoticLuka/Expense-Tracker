@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken';
 import userModel from '../schemas/user.mjs';
 import { checkPassword } from '../utils/password-hashing.mjs';
 import dotenv from 'dotenv';
+import { envPath } from '../utils/pathResolver.mjs';
 
-dotenv.config({path: "../../.env"});
+dotenv.config({path: envPath});
 
 export const handleLogin = async (request, response) => {
     const {username, password} = request.body;
@@ -29,7 +30,6 @@ export const handleLogin = async (request, response) => {
     
     //redis db need to be added to store all refresh tokens
     
-    res.cookie("refreshToken", refreshToken, {httpOnly: true, sameSite: true, maxAge: 1000 * 60 * 60 * 24});
-    return res.status(200).json({accessToken});
-
+    response.cookie("refreshToken", refreshToken, {httpOnly: true, sameSite: true, maxAge: 1000 * 60 * 60 * 24});
+    return response.status(200).json({accessToken});
 }
