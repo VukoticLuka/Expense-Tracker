@@ -11,7 +11,7 @@ import {createUser,
         updateUserByUsername}
         from "../services/userService.mjs"
 
-const router = Router();
+export const router = Router();
 
 router.get("/", async (req, res) => {
     try{
@@ -87,6 +87,3 @@ router.delete("/:username", async (req, res) => {
         res.status(500).json({"error": error.message});
     }
 });
-
-
-export default router;

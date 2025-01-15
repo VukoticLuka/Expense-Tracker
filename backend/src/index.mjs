@@ -1,9 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import dbConnection from './dbConnect.mjs';
-import router from './routes/users.mjs';
+import { envPath } from './utils/pathResolver.mjs';
+import { router as userRouter } from './routes/users.mjs';
+import { router as authRouter } from './routes/auth.mjs';
 
-dotenv.config({path: "../.env"});
+dotenv.config({path: envPath});
 
 const port = process.env.PORT || 3000;
 
@@ -13,7 +15,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use(`${prefix}/users`, router);
+app.use(`${prefix}/users`, userRouter);
+app.use(`${prefix}/login`, authRouter);
 
 
 (async function(){
