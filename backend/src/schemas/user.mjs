@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { CurrencyEnum } from "./enums.mjs";
 
 
 function lengthValidator(min, max){
@@ -40,7 +41,7 @@ export const userSchema = new mongoose.Schema({
     },
     currency: {
         type: String,
-        enum: ["USD", "EUR", "RSD"],
+        enum: Object.values(CurrencyEnum),
         default: "EUR"
     },
     balance: {
