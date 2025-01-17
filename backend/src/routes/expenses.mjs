@@ -19,12 +19,12 @@ router.get('/',
             const {
                 body,
                 user: {
-                    _id
+                    userId
                 }
             } = request;
             const expenses = request.isFiltered ? 
-                            await fetchExpensesByFilters(_id, body) :
-                            await fetchExpenses(_id);
+                            await fetchExpensesByFilters(userId, body) :
+                            await fetchExpenses(userId);
 
             return response.status(200).json(expenses);
         }catch(error){
@@ -40,10 +40,10 @@ router.post('/',
             const {
                 body,
                 user: {
-                    _id
+                    userId
                 }
             } = request;
-            const newExpense = {user_id: _id, ...body};
+            const newExpense = {user_id: userId, ...body};
 
             const result = await createExpense(newExpense);
 
@@ -67,11 +67,11 @@ router.patch('/',
                 body,
                 query,
                 user: {
-                    _id
+                    userId
                 }
             } = request;
     
-            const filterObj = {userId: _id, ...query};
+            const filterObj = {user_id: userId, ...query};
             const result = await updateExpenses(body, filterObj);
             
             if(result.matchedCount === 0){
@@ -96,11 +96,11 @@ router.delete("/",
         try{
             const {
                 user: {
-                    _id
+                    userId
                 },
                 query
             } = request;
-            const result = await deleteExpensesByFilter(_id, query);
+            const result = await deleteExpensesByFilter(userId, query);
             if(result.deletedCount === 0){
                 return response.status(404).json({message: "No expense found!"});
             }
