@@ -19,12 +19,12 @@ router.get('/',
             const {
                 body,
                 user: {
-                    userId
+                    _id
                 }
             } = request;
             const expenses = request.isFiltered ? 
-                            await fetchExpensesByFilters(userId, body) :
-                            await fetchExpenses(userId);
+                            await fetchExpensesByFilters(_id, body) :
+                            await fetchExpenses(_id);
 
             return response.status(200).json(expenses);
         }catch(error){
@@ -33,7 +33,31 @@ router.get('/',
     }
 );
 
+router.post('/',
+    autheticateToken,
+    async (request, response) => {
+        try{
+            const {
+                body,
+                user: {
+                    _id
+                }
+            } = request;
+            const newExpense = {user_id: _id, ...body};
 
+            const result = await createExpense(newExpense);
+
+            return response.status(201).json(result);
+
+        }catch(error){
+            if(error.code === 11000){
+                return response.status(409).json({message: "Expense already exists"});
+            }
+
+            return response.status(500).json({"message": "Internal server error!"});
+        }
+    }
+);
 
 
 
