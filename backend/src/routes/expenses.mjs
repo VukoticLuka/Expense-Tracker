@@ -59,5 +59,33 @@ router.post('/',
     }
 );
 
-
+router.patch('/',
+    autheticateToken,
+    async(request, response) => {
+        try{
+            const {
+                body,
+                query,
+                user: {
+                    _id
+                }
+            } = request;
+    
+            const filterObj = {userId: _id, ...query};
+            const result = await updateExpenses(body, filterObj);
+            
+            if(result.matchedCount === 0){
+                return response.status(404).json({message: "No expense found!"});
+            }
+    
+            if(result.matchedCount !== result.modifiedCount){
+                return response.status(500).json({message: "Internal server error!"});
+            }
+    
+            return response.sendStatus(200);
+        }catch(error){
+            return response.sendStatus(500);
+        }
+    }
+)
 
