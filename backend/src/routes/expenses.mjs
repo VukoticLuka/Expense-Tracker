@@ -89,3 +89,25 @@ router.patch('/',
     }
 )
 
+
+router.delete("/", 
+    autheticateToken,
+    async(request, response) => {
+        try{
+            const {
+                user: {
+                    _id
+                },
+                query
+            } = request;
+            const result = await deleteExpensesByFilter(_id, query);
+            if(result.deletedCount === 0){
+                return response.status(404).json({message: "No expense found!"});
+            }
+    
+            return response.sendStatus(204);
+        }catch(error){
+            return response.sendStatus(500);
+        }
+    }
+)
