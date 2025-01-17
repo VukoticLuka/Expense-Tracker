@@ -2,7 +2,7 @@ import { Router } from "express";
 import {checkSchema} from 'express-validator'
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import { createUserValidationShema } from "../utils/validationSchemas.mjs";
-import { processUserValidationSchema,
+import { processValidationSchema,
         preventUsernameInBody
  } from '../utils/middlewares.mjs'
 import {createUser,
@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", 
     checkSchema(createUserValidationShema),
-    processUserValidationSchema,
+    processValidationSchema,
     async (req,res) => {
     try{
         const {body} = req;

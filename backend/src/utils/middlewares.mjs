@@ -8,7 +8,7 @@ export const preventUsernameInBody = (req, res, next) => {
     next();
 }
 
-export const processUserValidationSchema = async (req,res, next) => {
+export const processValidationSchema = async (req,res, next) => {
     const result = validationResult(req);
 
     if(!result.isEmpty()){
