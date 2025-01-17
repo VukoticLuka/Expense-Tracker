@@ -12,3 +12,10 @@ export const CurrencyEnum = Object.freeze({
     RSD: 'RSD',
     USD: 'USD',
 });
+
+export const ExpenseStatusEnum = Object.freeze({
+    PAID: 'Paid',
+    UNPAID: 'Unpaid',
+    PENDING: 'Pending',
+    CANCELLED: 'Cancelled', 
+});

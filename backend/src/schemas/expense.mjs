@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import userModel from './user.mjs';
-import { CategoryEnum, CurrencyEnum } from './enums.mjs';
+import { CategoryEnum, CurrencyEnum, ExpenseStatusEnum } from './enums.mjs';
 
 export const expenseSchema = new mongoose.Schema({
     user_id: {
@@ -36,6 +36,11 @@ export const expenseSchema = new mongoose.Schema({
         required: true,
         set: (newDate) => new Date(newDate)
     },
+    status: {
+        type: String,
+        enum: Object.values(ExpenseStatusEnum),
+        default: ExpenseStatusEnum.UNPAID
+    },
     description: {
         type: String,
         required: false,
@@ -57,6 +62,9 @@ export const expenseSchema = new mongoose.Schema({
     }
 }
 );
+
+//adding combined unique index to expenses
+expenseSchema.index({user_id: 1, product: 1, price: 1, date: 1}, {unique: true});
 
 const expenseModel = mongoose.model('Expense', expenseSchema);
 
