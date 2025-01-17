@@ -19,3 +19,15 @@ export const processValidationSchema = async (req,res, next) => {
 
     next();
 }
+
+export const checkFilterObject = async (req,res,next) => {
+    const {body} = req;
+
+    if(body && Object.keys(body).length > 0){
+        req.isFiltered = true;
+    }else{
+        req.isFiltered = false;
+    }
+
+    next();
+}

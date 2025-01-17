@@ -12,10 +12,15 @@ export const createExpense = async(newExpense) => {
 }
 
 export const fetchExpenses = async(userId) => {
-    const expenses = await expenseModel.find({user_id: userId});
-    //we can use .lean() function instead of .toJSON directly on query 
-    //but this looks more intuitive to me
-    return expenses.map((expense) => expense.toJSON());
+    try{
+        const expenses = await expenseModel.find({user_id: userId});
+        //we can use .lean() function instead of .toJSON directly on query 
+        //but this looks more intuitive to me
+        return expenses.map((expense) => expense.toJSON());
+    }catch(error){
+        console.error('Error occured in fetchExpenses: ', error.message);
+        throw error;
+    }
 }
 
 export const fetchExpensesByFilters = async(userId, filterObj) => {
