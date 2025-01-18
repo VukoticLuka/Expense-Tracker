@@ -4,7 +4,7 @@ import { envPath } from "./pathResolver.mjs";
 
 dotenv.config({path: envPath});
 
-const saltRounds = process.env.SALTROUNDS || 10;
+const saltRounds = parseInt(process.env.SALTROUNDS || 10);
 
 export const hashPassword = async (password) => {
     try{

@@ -17,7 +17,7 @@ export const handleLogin = async (request, response) => {
 
     const match = await checkPassword(password, user.password);
 
-    if(!match) return res.sendStatus(401);
+    if(!match) return response.sendStatus(401);
 
     const accessToken = jwt.sign(
             {"userId": user._id}, 
