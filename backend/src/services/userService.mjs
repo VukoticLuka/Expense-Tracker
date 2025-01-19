@@ -78,7 +78,7 @@ export const addBalance = async function(userId, balance){
             { new: true }
         );
 
-        return updatedUser;
+        return updatedUser.toJSON();
     }catch(error){
         console.log("Error occured in addBalance: ", error.message);
         throw error;
