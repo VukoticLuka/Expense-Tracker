@@ -65,3 +65,22 @@ export const deleteUserByUsername = async function(username){
         throw new Error("Internal server error in deleteUserByUsername function");
     }
 }
+
+export const addBalance = async function(userId, balance){
+    try{
+        const balanceFloat = parseFloat(balance);
+
+        if(isNaN(balanceFloat)) throw new Error("Invalid balance value");
+
+        const updatedUser = await userModel.findOneAndUpdate(
+            { _id: userId },
+            { $inc: {balance: balanceFloat }},
+            { new: true }
+        );
+
+        return updatedUser;
+    }catch(error){
+        console.log("Error occured in addBalance: ", error.message);
+        throw error;
+    }
+}
