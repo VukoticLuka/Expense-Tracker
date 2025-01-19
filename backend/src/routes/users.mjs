@@ -1,11 +1,11 @@
 import { Router } from "express";
 import {checkSchema} from 'express-validator'
+import mongoose from "mongoose";
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import { createUserValidationShema } from "../utils/validationSchemas.mjs";
 import { processValidationSchema,
-        preventUsernameInBody,
-        deleteAllConnectedExpenses
- } from '../utils/middlewares.mjs'
+        preventUsernameInBody}
+         from '../utils/middlewares.mjs'
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
@@ -13,6 +13,7 @@ import {createUser,
         addBalance,
         deleteUser }
         from "../services/userService.mjs"
+import { deleteAllConnectedExpenses } from "../services/expenseService.mjs";
 import { autheticateToken } from "../controllers/refreshTokenController.mjs";
 
 export const router = Router();
@@ -79,22 +80,27 @@ router.put("/",
 
 router.delete("/",
     autheticateToken,
-    deleteAllConnectedExpenses,
     async (req, res) => {
+        const session = await mongoose.startSession();
+        session.startTransaction();
         try{
             const {
                 user: {
                     userId
                 }
             } = req;
+            
+            const deleteResult = await deleteAllConnectedExpenses(userId,session);
 
-            const result = await deleteUser(userId);
+            const result = await deleteUser(userId, session);
 
-            if(!result.acknowledged) return res.status(500).json({message: "Internal server error! Unsuccessful deletion of user!"});
-
+            await session.commitTransaction();
             res.sendStatus(200);
         }catch(error){
+            await session.abortTransaction();
             res.status(500).json({message: "Internal server error!"});
+        }finally{
+            session.endSession();
         }
     }
 )
