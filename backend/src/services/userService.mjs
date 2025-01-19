@@ -57,12 +57,27 @@ export const updateUserByUsername = async function(username, updateBody){
 
 export const deleteUserByUsername = async function(username){
     try{
-        const result = await userModel.deleteOne({"username": username});
+        const user = await fetchUserByUsername(username);
+        if(!user)  throw new Error("User not found");
+
+        const result = await userModel.deleteOne({username: username});
 
         return result;
+
     }catch(error){
         console.error(`Error occured in deleteUserByUsername func: ${error.message}`);
         throw new Error("Internal server error in deleteUserByUsername function");
+    }
+}
+
+export const deleteUser = async function(userId, session){
+    try{
+        const result = await userModel.deleteOne({_id: userId}, {session: session});
+        if(!result.acknowledged) throw new Error("Unsuccessful deletion of user!");
+        return result;
+    }catch(error){
+        console.log("Error occured in deleteUser utility function: ", error.message);
+        throw error;
     }
 }
 

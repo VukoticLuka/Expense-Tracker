@@ -1,4 +1,5 @@
 import {validationResult} from 'express-validator'
+import expenseModel from '../schemas/expense.mjs';
 
 export const preventUsernameInBody = (req, res, next) => {
     if(req.body.username){

@@ -60,3 +60,14 @@ export const deleteExpensesByFilter = async(userId, filterObj) => {
         throw error;
     }
 }
+
+export const deleteAllConnectedExpenses = async (userId,session) => {
+    try{
+        const result = await expenseModel.deleteMany({user_id: userId}, { session: session});
+        if(!result.acknowledged) throw new Error("Internal server error! Unsuccessful deletion of expenses");
+        return result;
+    }catch(error){
+        console.log("Error occured in deleteAllConnectedExpense: ", error.message);
+        throw error;
+    }
+}
