@@ -3,13 +3,15 @@ import {checkSchema} from 'express-validator'
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import { createUserValidationShema } from "../utils/validationSchemas.mjs";
 import { processValidationSchema,
-        preventUsernameInBody
+        preventUsernameInBody,
+        deleteAllConnectedExpenses
  } from '../utils/middlewares.mjs'
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
         updateUserByUsername,
-        addBalance }
+        addBalance,
+        deleteUser }
         from "../services/userService.mjs"
 import { autheticateToken } from "../controllers/refreshTokenController.mjs";
 
@@ -74,6 +76,28 @@ router.put("/",
         }
     }
 });
+
+router.delete("/",
+    autheticateToken,
+    deleteAllConnectedExpenses,
+    async (req, res) => {
+        try{
+            const {
+                user: {
+                    userId
+                }
+            } = req;
+
+            const result = await deleteUser(userId);
+
+            if(!result.acknowledged) return res.status(500).json({message: "Internal server error! Unsuccessful deletion of user!"});
+
+            res.sendStatus(200);
+        }catch(error){
+            res.status(500).json({message: "Internal server error!"});
+        }
+    }
+)
 
 router.delete("/:username", async (req, res) => {
     try{
