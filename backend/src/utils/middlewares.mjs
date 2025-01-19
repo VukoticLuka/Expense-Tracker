@@ -32,15 +32,3 @@ export const checkFilterObject = async (req,res,next) => {
 
     next();
 }
-
-export const deleteAllConnectedExpenses = async (req,res, next) => {
-    const {
-        user: {
-            userId
-        }
-    } = req;
-    const result = await expenseModel.deleteMany({user_id: userId});
-    if(!result.acknowledged) return res.status(500).json("Internal server error! Unsuccessful deletion of expenses");
-
-    next();
-}
