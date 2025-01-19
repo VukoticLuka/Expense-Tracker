@@ -70,10 +70,10 @@ export const deleteUserByUsername = async function(username){
     }
 }
 
-export const deleteUser = async function(userId){
+export const deleteUser = async function(userId, session){
     try{
-        const result = await userModel.deleteOne({_id: userId});
-
+        const result = await userModel.deleteOne({_id: userId}, {session: session});
+        if(!result.acknowledged) throw new Error("Unsuccessful deletion of user!");
         return result;
     }catch(error){
         console.log("Error occured in deleteUser utility function: ", error.message);
