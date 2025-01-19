@@ -2,14 +2,16 @@ import { Router } from "express";
 import {checkSchema} from 'express-validator'
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
 import { createUserValidationShema } from "../utils/validationSchemas.mjs";
-import { processUserValidationSchema,
+import { processValidationSchema,
         preventUsernameInBody
  } from '../utils/middlewares.mjs'
 import {createUser,
         fetchUserByUsername,
         deleteUserByUsername,
-        updateUserByUsername}
+        updateUserByUsername,
+        addBalance }
         from "../services/userService.mjs"
+import { autheticateToken } from "../controllers/refreshTokenController.mjs";
 
 export const router = Router();
 
@@ -29,7 +31,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", 
     checkSchema(createUserValidationShema),
-    processUserValidationSchema,
+    processValidationSchema,
     async (req,res) => {
     try{
         const {body} = req;
@@ -87,3 +89,24 @@ router.delete("/:username", async (req, res) => {
         res.status(500).json({"error": error.message});
     }
 });
+
+router.patch("/balance",
+    autheticateToken, 
+    async (req, res) => {
+        try{
+            const {
+                body: {
+                    balance
+                },
+                user: {
+                    userId
+                }
+            } = req;
+            
+            const updatedUser = await addBalance(userId, balance);
+    
+            return res.status(200).json(updatedUser);
+        }catch(error){
+            return res.status(500).json({message: "Internal server error!"});
+        }
+})

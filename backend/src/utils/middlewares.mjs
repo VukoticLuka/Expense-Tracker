@@ -8,13 +8,25 @@ export const preventUsernameInBody = (req, res, next) => {
     next();
 }
 
-export const processUserValidationSchema = async (req,res, next) => {
+export const processValidationSchema = async (req,res, next) => {
     const result = validationResult(req);
 
     if(!result.isEmpty()){
         return res.status(400).json({
             errors: result.array()
         })
+    }
+
+    next();
+}
+
+export const checkFilterObject = async (req,res,next) => {
+    const {body} = req;
+
+    if(body && Object.keys(body).length > 0){
+        req.isFiltered = true;
+    }else{
+        req.isFiltered = false;
     }
 
     next();
