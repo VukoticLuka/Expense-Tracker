@@ -4,6 +4,7 @@ import dbConnection from './dbConnect.mjs';
 import { envPath } from './utils/pathResolver.mjs';
 import { router as userRouter } from './routes/users.mjs';
 import { router as authRouter } from './routes/auth.mjs';
+import { router as expenseRouter } from './routes/expenses.mjs';
 
 dotenv.config({path: envPath});
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use(`${prefix}/users`, userRouter);
 app.use(`${prefix}/login`, authRouter);
+app.use(`${prefix}/expenses`, expenseRouter);
 
 
 (async function(){
