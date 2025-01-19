@@ -1,4 +1,5 @@
 import {validationResult} from 'express-validator'
+import expenseModel from '../schemas/expense.mjs';
 
 export const preventUsernameInBody = (req, res, next) => {
     if(req.body.username){
@@ -28,6 +29,18 @@ export const checkFilterObject = async (req,res,next) => {
     }else{
         req.isFiltered = false;
     }
+
+    next();
+}
+
+export const deleteAllConnectedExpenses = async (req,res, next) => {
+    const {
+        user: {
+            userId
+        }
+    } = req;
+    const result = await expenseModel.deleteMany({user_id: userId});
+    if(!result.acknowledged) return res.status(500).json("Internal server error! Unsuccessful deletion of expenses");
 
     next();
 }
