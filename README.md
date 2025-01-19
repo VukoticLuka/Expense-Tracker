@@ -22,6 +22,7 @@ and plan future expenses effectively.
 Expense Tracker
 ├── backend
 │   ├── package.json
+│   ├── package-lock.json
 │   ├── runBack.sh
 │   └── src
 │       ├── controllers
@@ -32,12 +33,14 @@ Expense Tracker
 │       ├── index.mjs
 │       ├── routes
 │       │   ├── auth.mjs
+│       │   ├── expenses.mjs
 │       │   └── users.mjs
 │       ├── schemas
 │       │   ├── enums.mjs
 │       │   ├── expense.mjs
 │       │   └── user.mjs
 │       ├── services
+│       │   ├── expenseService.mjs
 │       │   └── userService.mjs
 │       └── utils
 │           ├── middlewares.mjs
