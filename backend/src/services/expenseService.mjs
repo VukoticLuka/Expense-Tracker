@@ -2,9 +2,9 @@ import expenseModel from '../schemas/expense.mjs';
 
 export const createExpense = async(newExpense) => {
     try{
-        const newExpense = await expenseModel.create(newExpense);
+        const expense = await expenseModel.create(newExpense);
 
-        return newExpense.toJSON();
+        return expense.toJSON();
     }catch(error){
         console.error('Error occured in creteExpense utility function: ', error.message);
         throw error;
