@@ -18,18 +18,20 @@ import { autheticateToken } from "../controllers/refreshTokenController.mjs";
 
 export const router = Router();
 
-router.get("/", async (req, res) => {
-    try{
-        const {username} = req.query;
+router.get("/", 
+    autheticateToken,
+    async (req, res) => {
+        try{
+            const {username} = req.query;
 
-        const user = await fetchUserByUsername(username);
+            const user = await fetchUserByUsername(username);
 
-        if(!user) return res.status(404).send({msg: `User ${username} not found`});
+            if(!user) return res.status(404).send({msg: `User ${username} not found`});
 
-        return res.status(200).json(user);
-    }catch(error){
-        return res.status(500).json({msg: "Internal server error in fetchUser function"});
-    }   
+            return res.status(200).json(user);
+        }catch(error){
+            return res.status(500).json({msg: "Internal server error in fetchUser function"});
+        }   
 });
 
 router.post("/", 
@@ -54,6 +56,7 @@ router.post("/",
 });
 
 router.put("/", 
+    autheticateToken,
     preventUsernameInBody,
     async (req, res) => {
     try{
@@ -105,7 +108,9 @@ router.delete("/",
     }
 )
 
-router.delete("/:username", async (req, res) => {
+router.delete("/:username", 
+    autheticateToken,
+    async (req, res) => {
     try{
         const username = req.params.username;
 
