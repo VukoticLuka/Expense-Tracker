@@ -2,7 +2,7 @@ import { Router } from "express";
 import {checkSchema} from 'express-validator'
 import mongoose from "mongoose";
 import { hashPassword, checkPassword } from "../utils/password-hashing.mjs";
-import { createUserValidationShema } from "../utils/validationSchemas.mjs";
+import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
 import { processValidationSchema,
         preventUsernameInBody}
          from '../utils/middlewares.mjs'
@@ -35,7 +35,7 @@ router.get("/",
 });
 
 router.post("/", 
-    checkSchema(createUserValidationShema),
+    checkSchema(createUserValidationSchema),
     processValidationSchema,
     async (req,res) => {
     try{

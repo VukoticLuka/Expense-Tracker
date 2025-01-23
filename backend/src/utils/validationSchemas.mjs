@@ -1,4 +1,8 @@
-export const createUserValidationShema = {
+import { CurrencyEnum, 
+        ExpenseStatusEnum,
+        CategoryEnum } from "../schemas/enums.mjs"
+
+export const createUserValidationSchema = {
     username: {
         in: ['body'],
         isLength: {
@@ -71,7 +75,7 @@ export const createUserValidationShema = {
         in: ['body'],
         optional: true,
         isIn: {
-            options: [["EUR", "RSD", "USD"]],
+            options: [Object.values(CurrencyEnum)],
             errorMessage: "Currency if provided must be EUR, RSD or USD"
         }
     },
@@ -83,6 +87,75 @@ export const createUserValidationShema = {
                 min: 0
             },
             errorMessage: "Balance if provided must be greater or equal than 0"
+        }
+    }
+}
+
+export const createExpenseValidationSchema = {
+    product: {
+        in: ['body'],
+        notEmpty: {
+            errorMessage: "Price cannot be empty!"
+        },
+        isString: {
+            errorMessage: "Product name must be valid string!"
+        }
+    },
+    'price.amount': {
+        in: ['body'],
+        notEmpty: {
+            errorMessage: "Amount cannot be empty!",
+        },
+        isFloat: {
+            options: { min: 0 },
+            errorMessage: "Amount must be a positive number!",
+        },
+    },
+    'price.currency': {
+        in: ['body'],
+        notEmpty: {
+            errorMessage: "Currency cannot be empty!"
+        },
+        isIn: {
+            options: [Object.values(CurrencyEnum)],
+            errorMessage: `Currency must be: ${Object.values(CurrencyEnum)}`
+        }
+    },
+    category: {
+        in: ['body'],
+        notEmpty: {
+            errorMessage: "Category cannot be empty!"
+        },
+        isIn: {
+            options: [Object.values(CategoryEnum)],
+            errorMessage: `Category must be one of these categores: ${Object.values(CategoryEnum)}`
+        }
+    },
+    date: {
+        in: ['body'],
+        notEmpty: {
+            errorMessage: "Date must bre provided!"
+        },
+        isDate: {
+            errorMessage: "Date must be a valid date!",
+        },
+    },
+    status: {
+        in: ['body'],
+        optional: true,
+        isIn: {
+            options: [Object.values(ExpenseStatusEnum)],
+            errorMessage: `If provided status must be: ${Object.values(ExpenseStatusEnum)}`
+        }
+    },
+    description: {
+        in: ['body'],
+        optional: true,
+        isLength: {
+            options: {
+                max: 500,
+            },
+            errorMessage: "If provided description must be maximum length of 500 characters"
         }
     }
 }
