@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { envPath } from '../utils/pathResolver.mjs';
 
-dotenv.config({path: envPath});
+dotenv.config();
 
 export const autheticateToken = async (request, response ,next) => {
     console.log(request.headers);

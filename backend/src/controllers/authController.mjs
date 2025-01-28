@@ -2,9 +2,8 @@ import jwt from 'jsonwebtoken';
 import userModel from '../schemas/user.mjs';
 import { checkPassword } from '../utils/password-hashing.mjs';
 import dotenv from 'dotenv';
-import { envPath } from '../utils/pathResolver.mjs';
 
-dotenv.config({path: envPath});
+dotenv.config();
 
 export const handleLogin = async (request, response) => {
     const {username, password} = request.body;
