@@ -10,9 +10,29 @@ and plan future expenses effectively.
 - **Mongoose** -> ODM for MongoDB
 - **MongoDB** -> NoSQL database
 - **JWT** -> (JSON Web Token) for authentication
+- **Express-validator** -> Data validation
 
 ### Frontend
 - **Angular 16** -> (most likely)
+
+## :memo: Installation
+
+### Prerequisites
+- Node.js 16+
+- MongoDB 6.0+
+  
+1. **Clone the Repository**:
+   Clone the repository to your local machine:
+   ```bash
+   git clone <repo_url>
+   cd <project_directory>
+
+2. **Run the app**
+   Everything you need to do is to run runBack.sh.
+   This bash script will install all neccessary dependencies that are in package.json.
+   Just write in your terminal:
+    ```bash
+    ./runBack.sh
 
 ## Project structure
 

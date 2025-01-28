@@ -12,7 +12,7 @@ export const expenseSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        minLength: [1, 'Prpduct name cannot be empty!']
+        minLength: [1, 'Product name cannot be empty!']
     },
     price: {
         amount: {
