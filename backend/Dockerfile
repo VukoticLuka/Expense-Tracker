@@ -2,13 +2,13 @@ FROM node:20.18-bullseye
 
 WORKDIR /app
 
-COPY ./package*.json /app/
+COPY package*.json .
 
 RUN npm install
 
-COPY . /app/
+COPY . .
 
 EXPOSE 3000
 
-CMD ["sh", "runBack.sh"]
+CMD ["npm", "start"]
 
