@@ -1,6 +1,9 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 if [ ! -d "node_modules" ]; then
+    # Promeni direktorijum na backend
     echo "Installing npm dependencies..."
     npm install
 else

@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt"
 import dotenv from "dotenv"
-import { envPath } from "./pathResolver.mjs";
 
-dotenv.config({path: envPath});
+dotenv.config();
 
 const saltRounds = parseInt(process.env.SALTROUNDS || 10);
 

@@ -1,0 +1,27 @@
+**/node_modules
+**/.env
+node_modules
+
+# Izbegavaj npm log fajlove
+**/npm-debug.log
+
+
+*.log
+**/*.log
+
+.vscode/
+.idea
+
+*.md
+test/
+tests/
+coverage/
+dist/
+build/
+
+.git/
+.gitignore
+
+**/Dockerfile
+**/.dockerignore
+**/docker-compose.yaml

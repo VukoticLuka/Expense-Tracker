@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import { envPath } from './utils/pathResolver.mjs';
 
-dotenv.config({path: envPath})
+dotenv.config()
 
 const db_uri = process.env.DB_URI || "mongodb://localhost:27017/expenses";
 
