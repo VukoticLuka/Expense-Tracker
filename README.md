@@ -11,6 +11,7 @@ and plan future expenses effectively.
 - **MongoDB** -> NoSQL database
 - **JWT** -> (JSON Web Token) for authentication
 - **Express-validator** -> Data validation
+- **Docker** -> Used for containerizing application
 
 ### Frontend
 - **Angular 16** -> (most likely)
