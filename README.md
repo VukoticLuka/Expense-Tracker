@@ -41,32 +41,34 @@ and plan future expenses effectively.
 ```markdown
 Expense Tracker
 ├── backend
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── runBack.sh
-│   └── src
-│       ├── controllers
-│       │   ├── authController.mjs
-│       │   ├── logoutController.mjs
-│       │   └── refreshTokenController.mjs
-│       ├── dbConnect.mjs
-│       ├── index.mjs
-│       ├── routes
-│       │   ├── auth.mjs
-│       │   ├── expenses.mjs
-│       │   └── users.mjs
-│       ├── schemas
-│       │   ├── enums.mjs
-│       │   ├── expense.mjs
-│       │   └── user.mjs
-│       ├── services
-│       │   ├── expenseService.mjs
-│       │   └── userService.mjs
-│       └── utils
-│           ├── middlewares.mjs
-│           ├── password-hashing.mjs
-│           ├── pathResolver.mjs
-│           └── validationSchemas.mjs
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── runBack.sh
+│   └── src
+│       ├── controllers
+│       │   ├── authController.mjs
+│       │   ├── logoutController.mjs
+│       │   └── refreshTokenController.mjs
+│       ├── dbConnect.mjs
+│       ├── index.mjs
+│       ├── routes
+│       │   ├── auth.mjs
+│       │   ├── expenses.mjs
+│       │   └── users.mjs
+│       ├── schemas
+│       │   ├── enums.mjs
+│       │   ├── expense.mjs
+│       │   └── user.mjs
+│       ├── services
+│       │   ├── expenseService.mjs
+│       │   └── userService.mjs
+│       └── utils
+│           ├── middlewares.mjs
+│           ├── password-hashing.mjs
+│           ├── pathResolver.mjs
+│           └── validationSchemas.mjs
+├── docker-compose.yaml
 ├── frontend
 └── README.md
 ```
